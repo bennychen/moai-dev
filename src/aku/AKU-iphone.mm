@@ -73,6 +73,15 @@ void AKUIphoneInit ( UIApplication* application ) {
 	loadMoaiLib_NSNumber ();
 	loadMoaiLib_NSObject ();
 	loadMoaiLib_NSString ();
+	
+#ifndef DISABLE_SCREENSHOT
+	//call dummy methods to force linker to load obj-c categories w/o needing linker flags
+	
+	loadMoaiLib_UIImageAlpha();
+	loadMoaiLib_UIImageRotscale();
+	loadMoaiLib_UIImageRoundedCorner();
+	loadMoaiLib_UIImageResize();
+#endif
 
 	MOAIAppIOS::Affirm ().SetApplication ( application );
 			
@@ -102,6 +111,11 @@ void AKUIphoneInit ( UIApplication* application ) {
 	#ifndef DISABLE_FACEBOOK
 		REGISTER_LUA_CLASS ( MOAIFacebookIOS )
 	#endif
+	
+	
+#ifndef DISABLE_SCREENSHOT
+	REGISTER_LUA_CLASS ( MOAIScreenShotIOS )
+#endif
 	
 	// Device properties
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();

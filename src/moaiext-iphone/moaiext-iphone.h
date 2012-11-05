@@ -27,3 +27,5 @@
 #import <moaiext-iphone/NSObject+MOAILib.h>
 #import <moaiext-iphone/NSString+MOAILib.h>
 #import <moaiext-iphone/Reachability.h>
+
+#import <moaiext-iphone/MOAIScreenShotIOS.h>
