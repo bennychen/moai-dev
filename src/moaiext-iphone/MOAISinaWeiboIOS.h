@@ -71,6 +71,8 @@ private:
 	static int      _isAuthValid	( lua_State* L );
 	static int		_isAuthExpired	( lua_State* L );
 	static int      _getUserId		( lua_State* L );
+	static int	    _postText       ( lua_State* L );
+	static int      _postTextWithImg( lua_State* L );
 
 public:
 	

@@ -369,8 +369,6 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
 	[responseData appendData:data];
-	
-    NSLog(@"Base 1 is a %@", NSStringFromClass([responseData class]));
 }
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection
@@ -381,8 +379,6 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)theConnection 
 {
-	
-    NSLog(@"Base 2 is a %@", NSStringFromClass([responseData class]));
 	[self handleResponseData:responseData];
     
 	[responseData release];

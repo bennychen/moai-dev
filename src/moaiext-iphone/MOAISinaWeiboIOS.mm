@@ -213,6 +213,48 @@ int MOAISinaWeiboIOS::_getUserId(lua_State *L){
 	return 1;
 }
 
+int MOAISinaWeiboIOS::_postText(lua_State *L){
+	MOAILuaState state( L );
+	
+	cc8* text = lua_tostring ( state, 1 );
+	NSString* textStr = [[ NSString alloc ] initWithUTF8String:text ];
+
+	[MOAISinaWeiboIOS::Get().mSinaWeibo requestWithURL:@"statuses/update.json"
+					   params:[NSMutableDictionary dictionaryWithObjectsAndKeys:textStr, @"status", nil]
+					   httpMethod:@"POST"
+					   delegate:MOAISinaWeiboIOS::Get().mWeiboRequestDelegate];
+	
+	[textStr release];
+	return 0;
+}
+
+int MOAISinaWeiboIOS::_postTextWithImg(lua_State *L){
+	MOAILuaState state( L );
+	
+	cc8* text = lua_tostring( state, 1 );
+	cc8* imgFileLoc = lua_tostring( state, 2 );
+	NSString* textStr = [[ NSString alloc ] initWithUTF8String:text ];
+	NSString* imgLoc = [[ NSString alloc ] initWithUTF8String:imgFileLoc ];
+	UIImage *img = [UIImage imageWithContentsOfFile:imgLoc];
+	
+	if ( img != NULL) //USFileSys::CheckFileExists ( imgFileLoc )) {
+	{
+		[MOAISinaWeiboIOS::Get().mSinaWeibo requestWithURL:@"statuses/upload.json"
+					   params:[NSMutableDictionary dictionaryWithObjectsAndKeys:
+							   textStr, @"status",
+							   [UIImage imageWithContentsOfFile:imgLoc], @"pic", nil]
+								httpMethod:@"POST"
+								delegate:MOAISinaWeiboIOS::Get().mWeiboRequestDelegate];
+	}
+	else
+	{
+		NSLog(@"File %@ doesn't exist.", imgLoc);
+	}
+	
+	[textStr release];
+	return 0;
+}
+
 //================================================================//
 // MOAISinaWeiboIOS
 //================================================================//
@@ -257,10 +299,6 @@ void MOAISinaWeiboIOS::HandleOpenURL ( NSURL* url ) {
 
 //----------------------------------------------------------------//
 void MOAISinaWeiboIOS::RegisterLuaClass ( MOAILuaState& state ) {
-
-	// call any initializers for base classes here:
-	// MOAIFooBase::RegisterLuaClass ( state );
-
 	// also register constants:
 	// state.SetField ( -1, "FOO_CONST", ( u32 )FOO_CONST );
 
@@ -272,6 +310,8 @@ void MOAISinaWeiboIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "isAuthValid", _isAuthValid },
 		{ "isAuthExpired", _isAuthExpired },
 		{ "getUserId", _getUserId },
+		{ "postText", _postText },
+		{ "postTextWithImg", _postTextWithImg },
 		{ NULL, NULL }
 	};
 

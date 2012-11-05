@@ -139,8 +139,6 @@ int MOAIScreenShotIOS::_snapshotToFile(lua_State* L) {
 	
     if (lua_isnumber(L, 1)) {
 		
-		NSLog(@"MOAIScreenShotIOS::_snapshotToFile");
-		
 		SnapshotHelper *snapshotHelper= [[SnapshotHelper alloc] init];
 		
         snapshotHelper.orientation = (UIImageOrientation) lua_tointeger(L, 1);
@@ -149,7 +147,6 @@ int MOAIScreenShotIOS::_snapshotToFile(lua_State* L) {
             snapshotHelper.bounds = getBoundsRect(L, 2);
 		
 		
-		NSLog(@"MOAIScreenShotIOS::_snapshotToFile -2");
         // Fetch the pixels from the frame buffer into an UIImage
         UIImage *image= [snapshotHelper getImageFromFrameBuffer];
 		
