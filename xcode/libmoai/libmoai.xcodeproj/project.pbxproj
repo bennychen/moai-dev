@@ -1766,6 +1766,16 @@
 		B2CDFC0716475F350020BE85 /* UIImage+RoundedCorner.mm in Sources */ = {isa = PBXBuildFile; fileRef = B2CDFBFF16475F350020BE85 /* UIImage+RoundedCorner.mm */; };
 		B2CDFC0A16475F560020BE85 /* MOAIScreenShotIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = B2CDFC0816475F560020BE85 /* MOAIScreenShotIOS.h */; };
 		B2CDFC0B16475F560020BE85 /* MOAIScreenShotIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = B2CDFC0916475F560020BE85 /* MOAIScreenShotIOS.mm */; };
+		B2CDFC17164764B80020BE85 /* JSONKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B2CDFC0D164764B80020BE85 /* JSONKit.h */; };
+		B2CDFC18164764B80020BE85 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CDFC0E164764B80020BE85 /* JSONKit.m */; };
+		B2CDFC19164764B80020BE85 /* SinaWeibo.h in Headers */ = {isa = PBXBuildFile; fileRef = B2CDFC10164764B80020BE85 /* SinaWeibo.h */; };
+		B2CDFC1A164764B80020BE85 /* SinaWeibo.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CDFC11164764B80020BE85 /* SinaWeibo.m */; };
+		B2CDFC1B164764B80020BE85 /* SinaWeiboAuthorizeView.h in Headers */ = {isa = PBXBuildFile; fileRef = B2CDFC12164764B80020BE85 /* SinaWeiboAuthorizeView.h */; };
+		B2CDFC1C164764B80020BE85 /* SinaWeiboAuthorizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CDFC13164764B80020BE85 /* SinaWeiboAuthorizeView.m */; };
+		B2CDFC1D164764B80020BE85 /* SinaWeiboConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = B2CDFC14164764B80020BE85 /* SinaWeiboConstants.h */; };
+		B2CDFC1E164764B80020BE85 /* SinaWeiboRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = B2CDFC15164764B80020BE85 /* SinaWeiboRequest.h */; };
+		B2CDFC1F164764B80020BE85 /* SinaWeiboRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CDFC16164764B80020BE85 /* SinaWeiboRequest.m */; };
+		B2CDFC2816476C720020BE85 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CDFC2716476C720020BE85 /* Foundation.framework */; };
 		C359A149143A81BA005E7829 /* RAudioBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = C359A148143A81BA005E7829 /* RAudioBuffer.h */; };
 		C37D422213B16930009600BB /* BufferedAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D421E13B1692F009600BB /* BufferedAudioSource.h */; };
 		C37D422413B16930009600BB /* BufferedAudioSourceThread.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422013B16930009600BB /* BufferedAudioSourceThread.h */; };
@@ -4574,6 +4584,17 @@
 		B2CDFBFF16475F350020BE85 /* UIImage+RoundedCorner.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "UIImage+RoundedCorner.mm"; path = "moaiext-iphone/UIImage+RoundedCorner.mm"; sourceTree = "<group>"; };
 		B2CDFC0816475F560020BE85 /* MOAIScreenShotIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIScreenShotIOS.h; path = "moaiext-iphone/MOAIScreenShotIOS.h"; sourceTree = "<group>"; };
 		B2CDFC0916475F560020BE85 /* MOAIScreenShotIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIScreenShotIOS.mm; path = "moaiext-iphone/MOAIScreenShotIOS.mm"; sourceTree = "<group>"; };
+		B2CDFC0D164764B80020BE85 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		B2CDFC0E164764B80020BE85 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		B2CDFC0F164764B80020BE85 /* SinaWeibo.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SinaWeibo.bundle; sourceTree = "<group>"; };
+		B2CDFC10164764B80020BE85 /* SinaWeibo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeibo.h; sourceTree = "<group>"; };
+		B2CDFC11164764B80020BE85 /* SinaWeibo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeibo.m; sourceTree = "<group>"; };
+		B2CDFC12164764B80020BE85 /* SinaWeiboAuthorizeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiboAuthorizeView.h; sourceTree = "<group>"; };
+		B2CDFC13164764B80020BE85 /* SinaWeiboAuthorizeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeiboAuthorizeView.m; sourceTree = "<group>"; };
+		B2CDFC14164764B80020BE85 /* SinaWeiboConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiboConstants.h; sourceTree = "<group>"; };
+		B2CDFC15164764B80020BE85 /* SinaWeiboRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiboRequest.h; sourceTree = "<group>"; };
+		B2CDFC16164764B80020BE85 /* SinaWeiboRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeiboRequest.m; sourceTree = "<group>"; };
+		B2CDFC2716476C720020BE85 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		C359A148143A81BA005E7829 /* RAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAudioBuffer.h; path = ../../3rdparty/untz/src/RAudioBuffer.h; sourceTree = "<group>"; };
 		C37D421D13B1692F009600BB /* BufferedAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BufferedAudioSource.cpp; path = ../../3rdparty/untz/src/BufferedAudioSource.cpp; sourceTree = "<group>"; };
 		C37D421E13B1692F009600BB /* BufferedAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BufferedAudioSource.h; path = ../../3rdparty/untz/src/BufferedAudioSource.h; sourceTree = "<group>"; };
@@ -4768,7 +4789,6 @@
 		CD2FDEC113542F1400B814DF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEC213542F1400B814DF /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEC313542F1400B814DF /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/CoreVideo.framework; sourceTree = DEVELOPER_DIR; };
-		CD2FDEC413542F1400B814DF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEC513542F1400B814DF /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/OpenAL.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEC613542F1400B814DF /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEC713542F1400B814DF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -5968,6 +5988,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2CDFC2816476C720020BE85 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6082,6 +6103,7 @@
 		032409EE13564CAF000ADC60 /* 3rd party */ = {
 			isa = PBXGroup;
 			children = (
+				B2CDFC0C164764B80020BE85 /* sina */,
 				0725E2EB14F45AC700551DB5 /* adcolony */,
 				032409EF13564CAF000ADC60 /* box2d */,
 				66A643AD15462EBF009796A3 /* c-ares-1.7.5 */,
@@ -7383,6 +7405,24 @@
 			path = ../../3rdparty/openUDID;
 			sourceTree = "<group>";
 		};
+		B2CDFC0C164764B80020BE85 /* sina */ = {
+			isa = PBXGroup;
+			children = (
+				B2CDFC0D164764B80020BE85 /* JSONKit.h */,
+				B2CDFC0E164764B80020BE85 /* JSONKit.m */,
+				B2CDFC0F164764B80020BE85 /* SinaWeibo.bundle */,
+				B2CDFC10164764B80020BE85 /* SinaWeibo.h */,
+				B2CDFC11164764B80020BE85 /* SinaWeibo.m */,
+				B2CDFC12164764B80020BE85 /* SinaWeiboAuthorizeView.h */,
+				B2CDFC13164764B80020BE85 /* SinaWeiboAuthorizeView.m */,
+				B2CDFC14164764B80020BE85 /* SinaWeiboConstants.h */,
+				B2CDFC15164764B80020BE85 /* SinaWeiboRequest.h */,
+				B2CDFC16164764B80020BE85 /* SinaWeiboRequest.m */,
+			);
+			name = sina;
+			path = ../../3rdparty/sina;
+			sourceTree = "<group>";
+		};
 		CD04AEB6147256B0009C20E5 /* zlib */ = {
 			isa = PBXGroup;
 			children = (
@@ -8256,6 +8296,7 @@
 		CD2FDE8613542E9F00B814DF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B2CDFC2716476C720020BE85 /* Foundation.framework */,
 				CD2FDEDB13542F3600B814DF /* libiconv.dylib */,
 				CD2FDEBB13542F1400B814DF /* AddressBook.framework */,
 				CD2FDEBC13542F1400B814DF /* AddressBookUI.framework */,
@@ -8267,7 +8308,6 @@
 				CD2FDEC213542F1400B814DF /* CoreMedia.framework */,
 				071106EE13C6353400EE7C53 /* CoreTelephony.framework */,
 				CD2FDEC313542F1400B814DF /* CoreVideo.framework */,
-				CD2FDEC413542F1400B814DF /* Foundation.framework */,
 				07E6C62A140C4462004D1227 /* GameKit.framework */,
 				CD2FDEC513542F1400B814DF /* OpenAL.framework */,
 				CD2FDEC613542F1400B814DF /* OpenGLES.framework */,
@@ -11347,6 +11387,11 @@
 				B2CDFC0416475F350020BE85 /* UIImage+RotScale.h in Headers */,
 				B2CDFC0616475F350020BE85 /* UIImage+RoundedCorner.h in Headers */,
 				B2CDFC0A16475F560020BE85 /* MOAIScreenShotIOS.h in Headers */,
+				B2CDFC17164764B80020BE85 /* JSONKit.h in Headers */,
+				B2CDFC19164764B80020BE85 /* SinaWeibo.h in Headers */,
+				B2CDFC1B164764B80020BE85 /* SinaWeiboAuthorizeView.h in Headers */,
+				B2CDFC1D164764B80020BE85 /* SinaWeiboConstants.h in Headers */,
+				B2CDFC1E164764B80020BE85 /* SinaWeiboRequest.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13883,6 +13928,10 @@
 				B2CDFC0516475F350020BE85 /* UIImage+RotScale.mm in Sources */,
 				B2CDFC0716475F350020BE85 /* UIImage+RoundedCorner.mm in Sources */,
 				B2CDFC0B16475F560020BE85 /* MOAIScreenShotIOS.mm in Sources */,
+				B2CDFC18164764B80020BE85 /* JSONKit.m in Sources */,
+				B2CDFC1A164764B80020BE85 /* SinaWeibo.m in Sources */,
+				B2CDFC1C164764B80020BE85 /* SinaWeiboAuthorizeView.m in Sources */,
+				B2CDFC1F164764B80020BE85 /* SinaWeiboRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
