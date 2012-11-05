@@ -29,21 +29,188 @@
 #include <moaiext-iphone/MOAISinaWeiboIOS.h>
 
 //================================================================//
+// MOAISinaWeiboIOSDelegate
+//================================================================//
+@implementation MOAISinaWeiboIOSDelegate
+
+//================================================================//
+#pragma mark -
+#pragma mark Protocol MOAISinaWeiboIOSDelegate
+//================================================================//
+
+- (void)sinaweiboDidLogIn:(SinaWeibo *)sinaweibo
+{
+    NSLog(@"sinaweiboDidLogIn userID = %@ accesstoken = %@ expirationDate = %@ refresh_token = %@", sinaweibo.userID, sinaweibo.accessToken, sinaweibo.expirationDate,sinaweibo.refreshToken);
+	
+	MOAISinaWeiboIOS::Get().StoreAuthData();
+}
+
+- (void)sinaweiboDidLogOut:(SinaWeibo *)sinaweibo
+{
+    NSLog(@"sinaweiboDidLogOut");
+	MOAISinaWeiboIOS::Get().RemoveAuthData();
+}
+
+- (void)sinaweiboLogInDidCancel:(SinaWeibo *)sinaweibo
+{
+    NSLog(@"sinaweiboLogInDidCancel");
+}
+
+- (void)sinaweibo:(SinaWeibo *)sinaweibo logInDidFailWithError:(NSError *)error
+{
+    NSLog(@"sinaweibo logInDidFailWithError %@", error);
+}
+
+- (void)sinaweibo:(SinaWeibo *)sinaweibo accessTokenInvalidOrExpired:(NSError *)error
+{
+    NSLog(@"sinaweiboAccessTokenInvalidOrExpired %@", error);
+	MOAISinaWeiboIOS::Get().RemoveAuthData();
+}
+
+@end
+//================================================================//
+// MOAISinaWeiboRequestIOSDelegate
+//================================================================//
+@implementation MOAISinaWeiboRequestIOSDelegate
+
+//================================================================//
+#pragma mark -
+#pragma mark Protocol MOAISinaWeiboRequestIOSDelegate
+//================================================================//
+
+- (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
+{
+    if ([request.url hasSuffix:@"users/show.json"])
+    {
+       
+    }
+    else if ([request.url hasSuffix:@"statuses/user_timeline.json"])
+    {
+        
+    }
+    else if ([request.url hasSuffix:@"statuses/update.json"])
+    {
+        NSLog(@"Post status failed with error : %@", error);
+    }
+    else if ([request.url hasSuffix:@"statuses/upload.json"])
+    {
+        NSLog(@"Post image status failed with error : %@", error);
+    }
+}
+
+- (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
+{
+    if ([request.url hasSuffix:@"users/show.json"])
+    {
+    }
+    else if ([request.url hasSuffix:@"statuses/user_timeline.json"])
+    {
+    }
+    else if ([request.url hasSuffix:@"statuses/update.json"])
+    {
+    }
+    else if ([request.url hasSuffix:@"statuses/upload.json"])
+    {
+    }
+}
+
+@end
+
+//================================================================//
 // lua
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	_singletonHello
-	@text	Prints the string 'MOAISinaWeiboIOS singleton foo!' to the console.
+/**	@name	_init
+	@text	Initialize sina weibo
 
 	@out	nil
 */
-int MOAISinaWeiboIOS::_singletonHello ( lua_State* L ) {
-	UNUSED ( L );
-
-	printf ( "MOAISinaWeiboIOS singleton foo!\n" );
+int MOAISinaWeiboIOS::_init ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	NSLog( @"MOAISinaWeiboIOS initialization starts!\n" );
+	
+	cc8* appKey = lua_tostring ( state, 1 );
+	cc8* appSecret = lua_tostring ( state, 2 );
+	cc8* appRedirectURI = lua_tostring ( state, 3 );
+	
+	NSString* key = [[ NSString alloc ] initWithUTF8String:appKey ];
+	NSString* secret = [[ NSString alloc ] initWithUTF8String:appSecret ];
+	NSString* redirectUri = [[ NSString alloc ] initWithUTF8String:appRedirectURI ];
+	
+	MOAISinaWeiboIOS::Get().mSinaWeibo = [[SinaWeibo alloc] initWithAppKey:key appSecret:secret appRedirectURI:redirectUri
+										andDelegate:MOAISinaWeiboIOS::Get().mWeiboDelegate];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *sinaweiboInfo = [defaults objectForKey:@"SinaWeiboAuthData"];
+    if ([sinaweiboInfo objectForKey:@"AccessTokenKey"] && [sinaweiboInfo objectForKey:@"ExpirationDateKey"] && [sinaweiboInfo objectForKey:@"UserIDKey"])
+    {
+        MOAISinaWeiboIOS::Get().mSinaWeibo.accessToken = [sinaweiboInfo objectForKey:@"AccessTokenKey"];
+        MOAISinaWeiboIOS::Get().mSinaWeibo.expirationDate = [sinaweiboInfo objectForKey:@"ExpirationDateKey"];
+        MOAISinaWeiboIOS::Get().mSinaWeibo.userID = [sinaweiboInfo objectForKey:@"UserIDKey"];
+    }
+	
+	[key release];
+	[secret release];
+	[redirectUri release];
 	
 	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	_login
+ @text	Log in sina weibo
+ 
+ @out	nil
+ */
+int MOAISinaWeiboIOS::_login ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+    NSLog(@"log in sina weibo");
+	
+    [MOAISinaWeiboIOS::Get ().mSinaWeibo logIn];
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	_logout
+ @text	Log out sina weibo
+ 
+ @out	nil
+ */
+int MOAISinaWeiboIOS::_logout ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+    NSLog(@"log out sina weibo");
+	
+    [MOAISinaWeiboIOS::Get ().mSinaWeibo logOut];
+	
+	return 0;
+}
+
+int MOAISinaWeiboIOS::_isAuthValid( lua_State* L) {
+	MOAILuaState state ( L );
+	
+	lua_pushboolean( L, [MOAISinaWeiboIOS::Get ().mSinaWeibo isAuthValid] );
+	
+	return 1;
+}
+
+int MOAISinaWeiboIOS::_isAuthExpired( lua_State *L ) {
+	MOAILuaState state( L );
+	lua_pushboolean( L, [MOAISinaWeiboIOS::Get().mSinaWeibo isAuthorizeExpired] );
+	return 1;
+}
+
+int MOAISinaWeiboIOS::_getUserId(lua_State *L){
+	MOAILuaState state( L );
+	cc8* userId = [ MOAISinaWeiboIOS::Get ().mSinaWeibo.userID UTF8String ];
+	lua_pushstring( L, userId );
+	return 1;
 }
 
 //================================================================//
@@ -53,18 +220,39 @@ int MOAISinaWeiboIOS::_singletonHello ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAISinaWeiboIOS::MOAISinaWeiboIOS () {
 	
-	// register all classes MOAISinaWeiboIOS derives from
-	// we need this for custom RTTI implementation
-	RTTI_BEGIN
-		RTTI_EXTEND ( MOAILuaObject )
-		
-		// and any other objects from multiple inheritance...
-		// RTTI_EXTEND ( MOAISinaWeiboIOSBase )
-	RTTI_END
+	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIGlobalEventSource )
+	
+	mWeiboDelegate = [[ MOAISinaWeiboIOSDelegate alloc ] init];
+	mWeiboRequestDelegate = [[ MOAISinaWeiboRequestIOSDelegate alloc ] init ];
 }
 
 //----------------------------------------------------------------//
 MOAISinaWeiboIOS::~MOAISinaWeiboIOS () {
+	[mWeiboDelegate release];
+	[mWeiboRequestDelegate release];
+	[mSinaWeibo release];
+}
+
+void MOAISinaWeiboIOS::RemoveAuthData()
+{
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SinaWeiboAuthData"];
+}
+
+void MOAISinaWeiboIOS::StoreAuthData()
+{
+    NSDictionary *authData = [NSDictionary dictionaryWithObjectsAndKeys:
+                              mSinaWeibo.accessToken, @"AccessTokenKey",
+                              mSinaWeibo.expirationDate, @"ExpirationDateKey",
+                              mSinaWeibo.userID, @"UserIDKey",
+                              mSinaWeibo.refreshToken, @"refresh_token", nil];
+    [[NSUserDefaults standardUserDefaults] setObject:authData forKey:@"SinaWeiboAuthData"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+void MOAISinaWeiboIOS::HandleOpenURL ( NSURL* url ) {
+	
+	[ mSinaWeibo handleOpenURL:url ];
 }
 
 //----------------------------------------------------------------//
@@ -78,7 +266,12 @@ void MOAISinaWeiboIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
 	// here are the class methods:
 	luaL_Reg regTable [] = {
-		{ "init",		_singletonHello },
+		{ "init",		_init },
+		{ "login",      _login },
+		{ "logout",     _logout },
+		{ "isAuthValid", _isAuthValid },
+		{ "isAuthExpired", _isAuthExpired },
+		{ "getUserId", _getUserId },
 		{ NULL, NULL }
 	};
 

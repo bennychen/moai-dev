@@ -33,6 +33,25 @@
 
 #include <moaicore/moaicore.h>
 
+#import "SinaWeibo.h"
+#import "SinaWeiboRequest.h"
+
+//================================================================//
+// MOAISinaWeiboIOSDelegate
+//================================================================//
+@interface MOAISinaWeiboIOSDelegate : NSObject < SinaWeiboDelegate > {
+@private
+}
+@end
+
+//================================================================//
+// MOAISinaWeiboRequestIOSDelegate
+//================================================================//
+@interface MOAISinaWeiboRequestIOSDelegate : NSObject < SinaWeiboRequestDelegate > {
+@private
+}
+@end
+
 //================================================================//
 // MOAISinaWeiboIOS
 //================================================================//
@@ -40,19 +59,33 @@
 	@text	.
 */
 class MOAISinaWeiboIOS :
-	public MOAIGlobalClass < MOAISinaWeiboIOS, MOAILuaObject > {
+	public MOAIGlobalClass < MOAISinaWeiboIOS, MOAILuaObject >,
+	public MOAIGlobalEventSource
+{
 private:
 	
 	//----------------------------------------------------------------//
-	static int		_singletonHello		( lua_State* L );
+	static int		_init			( lua_State* L );
+	static int	    _login			( lua_State* L );
+	static int      _logout			( lua_State* L );
+	static int      _isAuthValid	( lua_State* L );
+	static int		_isAuthExpired	( lua_State* L );
+	static int      _getUserId		( lua_State* L );
 
 public:
 	
-	DECL_LUA_SINGLETON ( MOAISinaWeiboIOS )
+	DECL_LUA_SINGLETON ( MOAISinaWeiboIOS );
+		
+	SinaWeibo *mSinaWeibo;
+	MOAISinaWeiboIOSDelegate*	mWeiboDelegate;
+	MOAISinaWeiboRequestIOSDelegate*	mWeiboRequestDelegate;
 
 	//----------------------------------------------------------------//
 					MOAISinaWeiboIOS			();
 					~MOAISinaWeiboIOS			();
+	void		    RemoveAuthData();
+	void			StoreAuthData();
+	void			HandleOpenURL( NSURL* url );
 	void			RegisterLuaClass	( MOAILuaState& state );
 };
 

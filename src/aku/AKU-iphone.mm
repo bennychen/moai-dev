@@ -23,6 +23,10 @@ void AKUAppOpenFromURL ( NSURL* url ) {
 	#ifndef DISABLE_FACEBOOK
 		MOAIFacebookIOS::Get ().HandleOpenURL ( url );
 	#endif
+	
+	#ifndef DISABLE_SINAWEIBO
+		MOAISinaWeiboIOS::Get().HandleOpenURL ( url );
+	#endif
 }
 
 //-----------------------------------------------------------------//

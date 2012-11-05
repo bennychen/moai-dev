@@ -17,7 +17,7 @@
 
 #import "SinaWeiboRequest.h"
 #import "SinaWeiboConstants.h"
-#import "JSONKit.h"
+#import "CrittercismJSONKit.h"
 #import "SinaWeibo.h"
 
 #define kSinaWeiboRequestTimeOutInterval   180.0
@@ -198,7 +198,7 @@
 - (id)parseJSONData:(NSData *)data error:(NSError **)error
 {
     NSError *parseError = nil;
-	id result =[data objectFromJSONDataWithParseOptions:JKParseOptionStrict error:&parseError];
+	id result =[data objectFromJSONDataWithParseOptionsCrittercism:CrittercismJKParseOptionStrict error:&parseError];
 	
 	if (parseError && (error != nil))
     {
@@ -369,6 +369,8 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
 	[responseData appendData:data];
+	
+    NSLog(@"Base 1 is a %@", NSStringFromClass([responseData class]));
 }
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection
@@ -379,6 +381,8 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)theConnection 
 {
+	
+    NSLog(@"Base 2 is a %@", NSStringFromClass([responseData class]));
 	[self handleResponseData:responseData];
     
 	[responseData release];

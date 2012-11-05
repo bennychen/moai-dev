@@ -1766,8 +1766,6 @@
 		B2CDFC0716475F350020BE85 /* UIImage+RoundedCorner.mm in Sources */ = {isa = PBXBuildFile; fileRef = B2CDFBFF16475F350020BE85 /* UIImage+RoundedCorner.mm */; };
 		B2CDFC0A16475F560020BE85 /* MOAIScreenShotIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = B2CDFC0816475F560020BE85 /* MOAIScreenShotIOS.h */; };
 		B2CDFC0B16475F560020BE85 /* MOAIScreenShotIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = B2CDFC0916475F560020BE85 /* MOAIScreenShotIOS.mm */; };
-		B2CDFC17164764B80020BE85 /* JSONKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B2CDFC0D164764B80020BE85 /* JSONKit.h */; };
-		B2CDFC18164764B80020BE85 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CDFC0E164764B80020BE85 /* JSONKit.m */; };
 		B2CDFC19164764B80020BE85 /* SinaWeibo.h in Headers */ = {isa = PBXBuildFile; fileRef = B2CDFC10164764B80020BE85 /* SinaWeibo.h */; };
 		B2CDFC1A164764B80020BE85 /* SinaWeibo.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CDFC11164764B80020BE85 /* SinaWeibo.m */; };
 		B2CDFC1B164764B80020BE85 /* SinaWeiboAuthorizeView.h in Headers */ = {isa = PBXBuildFile; fileRef = B2CDFC12164764B80020BE85 /* SinaWeiboAuthorizeView.h */; };
@@ -4586,8 +4584,6 @@
 		B2CDFBFF16475F350020BE85 /* UIImage+RoundedCorner.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "UIImage+RoundedCorner.mm"; path = "moaiext-iphone/UIImage+RoundedCorner.mm"; sourceTree = "<group>"; };
 		B2CDFC0816475F560020BE85 /* MOAIScreenShotIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIScreenShotIOS.h; path = "moaiext-iphone/MOAIScreenShotIOS.h"; sourceTree = "<group>"; };
 		B2CDFC0916475F560020BE85 /* MOAIScreenShotIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIScreenShotIOS.mm; path = "moaiext-iphone/MOAIScreenShotIOS.mm"; sourceTree = "<group>"; };
-		B2CDFC0D164764B80020BE85 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
-		B2CDFC0E164764B80020BE85 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		B2CDFC0F164764B80020BE85 /* SinaWeibo.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SinaWeibo.bundle; sourceTree = "<group>"; };
 		B2CDFC10164764B80020BE85 /* SinaWeibo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeibo.h; sourceTree = "<group>"; };
 		B2CDFC11164764B80020BE85 /* SinaWeibo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeibo.m; sourceTree = "<group>"; };
@@ -7412,8 +7408,6 @@
 		B2CDFC0C164764B80020BE85 /* sina */ = {
 			isa = PBXGroup;
 			children = (
-				B2CDFC0D164764B80020BE85 /* JSONKit.h */,
-				B2CDFC0E164764B80020BE85 /* JSONKit.m */,
 				B2CDFC0F164764B80020BE85 /* SinaWeibo.bundle */,
 				B2CDFC10164764B80020BE85 /* SinaWeibo.h */,
 				B2CDFC11164764B80020BE85 /* SinaWeibo.m */,
@@ -11393,7 +11387,6 @@
 				B2CDFC0416475F350020BE85 /* UIImage+RotScale.h in Headers */,
 				B2CDFC0616475F350020BE85 /* UIImage+RoundedCorner.h in Headers */,
 				B2CDFC0A16475F560020BE85 /* MOAIScreenShotIOS.h in Headers */,
-				B2CDFC17164764B80020BE85 /* JSONKit.h in Headers */,
 				B2CDFC19164764B80020BE85 /* SinaWeibo.h in Headers */,
 				B2CDFC1B164764B80020BE85 /* SinaWeiboAuthorizeView.h in Headers */,
 				B2CDFC1D164764B80020BE85 /* SinaWeiboConstants.h in Headers */,
@@ -13935,7 +13928,6 @@
 				B2CDFC0516475F350020BE85 /* UIImage+RotScale.mm in Sources */,
 				B2CDFC0716475F350020BE85 /* UIImage+RoundedCorner.mm in Sources */,
 				B2CDFC0B16475F560020BE85 /* MOAIScreenShotIOS.mm in Sources */,
-				B2CDFC18164764B80020BE85 /* JSONKit.m in Sources */,
 				B2CDFC1A164764B80020BE85 /* SinaWeibo.m in Sources */,
 				B2CDFC1C164764B80020BE85 /* SinaWeiboAuthorizeView.m in Sources */,
 				B2CDFC1F164764B80020BE85 /* SinaWeiboRequest.m in Sources */,
