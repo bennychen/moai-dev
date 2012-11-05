@@ -1776,6 +1776,8 @@
 		B2CDFC1E164764B80020BE85 /* SinaWeiboRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = B2CDFC15164764B80020BE85 /* SinaWeiboRequest.h */; };
 		B2CDFC1F164764B80020BE85 /* SinaWeiboRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CDFC16164764B80020BE85 /* SinaWeiboRequest.m */; };
 		B2CDFC2816476C720020BE85 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CDFC2716476C720020BE85 /* Foundation.framework */; };
+		B2CDFC33164779ED0020BE85 /* MOAISinaWeiboIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = B2CDFC31164779ED0020BE85 /* MOAISinaWeiboIOS.mm */; };
+		B2CDFC34164779ED0020BE85 /* MOAISinaWeiboIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = B2CDFC32164779ED0020BE85 /* MOAISinaWeiboIOS.h */; };
 		C359A149143A81BA005E7829 /* RAudioBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = C359A148143A81BA005E7829 /* RAudioBuffer.h */; };
 		C37D422213B16930009600BB /* BufferedAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D421E13B1692F009600BB /* BufferedAudioSource.h */; };
 		C37D422413B16930009600BB /* BufferedAudioSourceThread.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422013B16930009600BB /* BufferedAudioSourceThread.h */; };
@@ -4595,6 +4597,8 @@
 		B2CDFC15164764B80020BE85 /* SinaWeiboRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiboRequest.h; sourceTree = "<group>"; };
 		B2CDFC16164764B80020BE85 /* SinaWeiboRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeiboRequest.m; sourceTree = "<group>"; };
 		B2CDFC2716476C720020BE85 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		B2CDFC31164779ED0020BE85 /* MOAISinaWeiboIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAISinaWeiboIOS.mm; path = "moaiext-iphone/MOAISinaWeiboIOS.mm"; sourceTree = "<group>"; };
+		B2CDFC32164779ED0020BE85 /* MOAISinaWeiboIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISinaWeiboIOS.h; path = "moaiext-iphone/MOAISinaWeiboIOS.h"; sourceTree = "<group>"; };
 		C359A148143A81BA005E7829 /* RAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAudioBuffer.h; path = ../../3rdparty/untz/src/RAudioBuffer.h; sourceTree = "<group>"; };
 		C37D421D13B1692F009600BB /* BufferedAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BufferedAudioSource.cpp; path = ../../3rdparty/untz/src/BufferedAudioSource.cpp; sourceTree = "<group>"; };
 		C37D421E13B1692F009600BB /* BufferedAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BufferedAudioSource.h; path = ../../3rdparty/untz/src/BufferedAudioSource.h; sourceTree = "<group>"; };
@@ -8436,6 +8440,8 @@
 		CD524476135982480086DA15 /* moaiext-iphone */ = {
 			isa = PBXGroup;
 			children = (
+				B2CDFC31164779ED0020BE85 /* MOAISinaWeiboIOS.mm */,
+				B2CDFC32164779ED0020BE85 /* MOAISinaWeiboIOS.h */,
 				B2CDFC0816475F560020BE85 /* MOAIScreenShotIOS.h */,
 				B2CDFC0916475F560020BE85 /* MOAIScreenShotIOS.mm */,
 				CDF2C627151B14DD0009D47D /* aku */,
@@ -11392,6 +11398,7 @@
 				B2CDFC1B164764B80020BE85 /* SinaWeiboAuthorizeView.h in Headers */,
 				B2CDFC1D164764B80020BE85 /* SinaWeiboConstants.h in Headers */,
 				B2CDFC1E164764B80020BE85 /* SinaWeiboRequest.h in Headers */,
+				B2CDFC34164779ED0020BE85 /* MOAISinaWeiboIOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13932,6 +13939,7 @@
 				B2CDFC1A164764B80020BE85 /* SinaWeibo.m in Sources */,
 				B2CDFC1C164764B80020BE85 /* SinaWeiboAuthorizeView.m in Sources */,
 				B2CDFC1F164764B80020BE85 /* SinaWeiboRequest.m in Sources */,
+				B2CDFC33164779ED0020BE85 /* MOAISinaWeiboIOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

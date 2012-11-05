@@ -29,3 +29,4 @@
 #import <moaiext-iphone/Reachability.h>
 
 #import <moaiext-iphone/MOAIScreenShotIOS.h>
+#import <moaiext-iphone/MOAISinaWeiboIOS.h>

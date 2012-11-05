@@ -112,10 +112,13 @@ void AKUIphoneInit ( UIApplication* application ) {
 		REGISTER_LUA_CLASS ( MOAIFacebookIOS )
 	#endif
 	
+	#ifndef DISABLE_SINAWEIBO
+		REGISTER_LUA_CLASS( MOAISinaWeiboIOS )
+	#endif
 	
-#ifndef DISABLE_SCREENSHOT
-	REGISTER_LUA_CLASS ( MOAIScreenShotIOS )
-#endif
+	#ifndef DISABLE_SCREENSHOT
+		REGISTER_LUA_CLASS ( MOAIScreenShotIOS )
+	#endif
 	
 	// Device properties
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();
