@@ -56,6 +56,7 @@ private:
 	static int	_isLoading						( lua_State* L );
 	static int	_loadData						( lua_State* L );
 	static int	_loadHTML						( lua_State* L );
+	static int  _fileURLWithPath				( lua_State* L );
 	static int	_loadRequest					( lua_State* L ); 
 	static int	_openUrlInSafari				( lua_State* L ); 
 	static int	_runJavaScript					( lua_State* L );

@@ -531,6 +531,17 @@ int MOAIWebViewIOS::_show ( lua_State* L ) {
 	return 0;
 }
 
+int MOAIWebViewIOS::_fileURLWithPath( lua_State* L ) {
+	MOAILuaState state ( L );
+	cc8* path = state.GetValue < cc8* >( 1, "" );
+	
+	NSString* pathString = [[ NSString alloc ] initWithUTF8String:path ];
+	NSURL *URL = [NSURL fileURLWithPath:pathString];
+	
+	lua_pushstring( L, URL.absoluteString.UTF8String );
+	return 1;
+}
+
 //================================================================//
 // MOAIWebViewIOS
 //================================================================//
@@ -646,6 +657,7 @@ void MOAIWebViewIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "openUrlInSafari",	_openUrlInSafari },
+		{ "fileURLWithPath",    _fileURLWithPath },
 		{ NULL, NULL }
 	};
 	
