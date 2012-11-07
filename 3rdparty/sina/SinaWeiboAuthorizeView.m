@@ -141,10 +141,10 @@ static CGFloat kBorderWidth = 10;
         [self addSubview:webView];
         [webView release];
         
-        UIImage* closeImage = [UIImage imageNamed:@"SinaWeibo.bundle/images/close.png"];
         UIColor* color = [UIColor colorWithRed:167.0/255 green:184.0/255 blue:216.0/255 alpha:1];
-        closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [closeButton setImage:closeImage forState:UIControlStateNormal];
+        closeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+		
+        [closeButton setTitle:@"关闭" forState:UIControlStateNormal];
         [closeButton setTitleColor:color forState:UIControlStateNormal];
         [closeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
         [closeButton addTarget:self action:@selector(cancel)
@@ -375,8 +375,7 @@ static CGFloat kBorderWidth = 10;
     [self sizeToFitOrientation:NO];
     
     CGFloat innerWidth = self.frame.size.width - (kBorderWidth+1)*2;
-    [closeButton sizeToFit];
-    closeButton.frame = CGRectMake(2, 2, 29, 29);
+    closeButton.frame = CGRectMake(2, 2, 40, 29);
     
     webView.frame = CGRectMake(kBorderWidth+1, kBorderWidth+1, innerWidth,
                                self.frame.size.height - (1 + kBorderWidth*2));

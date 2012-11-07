@@ -68,6 +68,7 @@ private:
 	static int		_init			( lua_State* L );
 	static int	    _login			( lua_State* L );
 	static int      _logout			( lua_State* L );
+	static int		_compileDialog	( lua_State* L );
 	static int      _isAuthValid	( lua_State* L );
 	static int		_isAuthExpired	( lua_State* L );
 	static int      _getUserId		( lua_State* L );
@@ -77,9 +78,17 @@ private:
 public:
 	
 	DECL_LUA_SINGLETON ( MOAISinaWeiboIOS );
+	
+	enum {
+		SESSION_DID_LOGIN,
+		SESSION_DID_LOGOUT,
+		DIALOG_LOG_IN_CANCEL,
+		REQUEST_RESPONSE_WITH_RESULT,
+		REQUEST_RESPONSE_WITH_ERROR,
+	};
 		
 	SinaWeibo *mSinaWeibo;
-	MOAISinaWeiboIOSDelegate*	mWeiboDelegate;
+	MOAISinaWeiboIOSDelegate*			mWeiboDelegate;	
 	MOAISinaWeiboRequestIOSDelegate*	mWeiboRequestDelegate;
 
 	//----------------------------------------------------------------//

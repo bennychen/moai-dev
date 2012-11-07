@@ -26,7 +26,9 @@
 #ifndef DISABLE_SINAWEIBO
 
 #include "pch.h"
-#include <moaiext-iphone/MOAISinaWeiboIOS.h>
+
+#import <moaiext-iphone/MOAISinaWeiboIOS.h>
+#import <moaiext-iphone/MOAISinaWeiboCompileView.h>
 
 //================================================================//
 // MOAISinaWeiboIOSDelegate
@@ -43,17 +45,37 @@
     NSLog(@"sinaweiboDidLogIn userID = %@ accesstoken = %@ expirationDate = %@ refresh_token = %@", sinaweibo.userID, sinaweibo.accessToken, sinaweibo.expirationDate,sinaweibo.refreshToken);
 	
 	MOAISinaWeiboIOS::Get().StoreAuthData();
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	
+	if ( MOAISinaWeiboIOS::Get().PushListener ( MOAISinaWeiboIOS::DIALOG_LOG_IN_CANCEL, state ))
+	{
+		state.DebugCall ( 0, 0 );
+	}
 }
 
 - (void)sinaweiboDidLogOut:(SinaWeibo *)sinaweibo
 {
     NSLog(@"sinaweiboDidLogOut");
 	MOAISinaWeiboIOS::Get().RemoveAuthData();
+	
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	
+	if ( MOAISinaWeiboIOS::Get().PushListener ( MOAISinaWeiboIOS::SESSION_DID_LOGOUT, state ))
+	{
+		state.DebugCall ( 0, 0 );
+	}
 }
 
 - (void)sinaweiboLogInDidCancel:(SinaWeibo *)sinaweibo
 {
     NSLog(@"sinaweiboLogInDidCancel");
+	
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	
+	if ( MOAISinaWeiboIOS::Get().PushListener ( MOAISinaWeiboIOS::DIALOG_LOG_IN_CANCEL, state ))
+	{
+		state.DebugCall ( 0, 0 );
+	}
 }
 
 - (void)sinaweibo:(SinaWeibo *)sinaweibo logInDidFailWithError:(NSError *)error
@@ -68,6 +90,7 @@
 }
 
 @end
+
 //================================================================//
 // MOAISinaWeiboRequestIOSDelegate
 //================================================================//
@@ -237,7 +260,7 @@ int MOAISinaWeiboIOS::_postTextWithImg(lua_State *L){
 	NSString* imgLoc = [[ NSString alloc ] initWithUTF8String:imgFileLoc ];
 	UIImage *img = [UIImage imageWithContentsOfFile:imgLoc];
 	
-	if ( img != NULL) //USFileSys::CheckFileExists ( imgFileLoc )) {
+	if ( img != NULL)
 	{
 		[MOAISinaWeiboIOS::Get().mSinaWeibo requestWithURL:@"statuses/upload.json"
 					   params:[NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -248,10 +271,32 @@ int MOAISinaWeiboIOS::_postTextWithImg(lua_State *L){
 	}
 	else
 	{
-		NSLog(@"File %@ doesn't exist.", imgLoc);
+		NSLog(@"Image file %@ doesn't exist.", imgLoc);
 	}
 	
 	[textStr release];
+	return 0;
+}
+
+int MOAISinaWeiboIOS::_compileDialog(lua_State* L)
+{
+	MOAILuaState state( L );
+	
+	cc8* text = lua_tostring( state, 1 );
+	cc8* imgFileLoc = lua_tostring( state, 2 );
+	NSString* textStr = [[ NSString alloc ] initWithUTF8String:text ];
+	NSString* imgLoc = [[ NSString alloc ] initWithUTF8String:imgFileLoc ];
+	UIImage *img = [UIImage imageWithContentsOfFile:imgLoc];
+	
+	MOAISinaWeiboCompileView *compileView = [[MOAISinaWeiboCompileView alloc]initWithPost:
+																			MOAISinaWeiboIOS::Get().mSinaWeibo
+																			text:textStr
+																			image:img];
+		
+		
+	[compileView show];
+	[compileView release];
+
 	return 0;
 }
 
@@ -300,18 +345,24 @@ void MOAISinaWeiboIOS::HandleOpenURL ( NSURL* url ) {
 //----------------------------------------------------------------//
 void MOAISinaWeiboIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	// also register constants:
-	// state.SetField ( -1, "FOO_CONST", ( u32 )FOO_CONST );
+	state.SetField ( -1, "SESSION_DID_LOGIN",				( u32 )SESSION_DID_LOGIN );
+	state.SetField ( -1, "SESSION_DID_NOT_LOGIN",			( u32 )SESSION_DID_LOGOUT );
+	state.SetField ( -1, "DIALOG_LOG_IN_CANCEL",			( u32 )DIALOG_LOG_IN_CANCEL );
+	state.SetField ( -1, "REQUEST_RESPONSE_WITH_RESULT", 	( u32 )REQUEST_RESPONSE_WITH_RESULT );
+	state.SetField ( -1, "REQUEST_RESPONSE_WITH_ERROR", 	( u32 )REQUEST_RESPONSE_WITH_ERROR );
 
 	// here are the class methods:
 	luaL_Reg regTable [] = {
-		{ "init",		_init },
-		{ "login",      _login },
-		{ "logout",     _logout },
-		{ "isAuthValid", _isAuthValid },
-		{ "isAuthExpired", _isAuthExpired },
-		{ "getUserId", _getUserId },
-		{ "postText", _postText },
-		{ "postTextWithImg", _postTextWithImg },
+		{ "init",					_init },
+		{ "login",					_login },
+		{ "logout",					_logout },
+		{ "compileDialog",			_compileDialog },
+		{ "isAuthValid",			_isAuthValid },
+		{ "isAuthExpired",			_isAuthExpired },
+		{ "getUserId",				_getUserId },
+		{ "postText",				_postText },
+		{ "postTextWithImg",		_postTextWithImg },
+		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAISinaWeiboIOS > },
 		{ NULL, NULL }
 	};
 
