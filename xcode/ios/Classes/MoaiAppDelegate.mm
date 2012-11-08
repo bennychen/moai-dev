@@ -101,6 +101,8 @@
 	
 		// restart moai view
 		[ mMoaiView pause:NO ];
+        
+        AKUAppDidBecomeActive();
 	}
 	
 	//----------------------------------------------------------------//

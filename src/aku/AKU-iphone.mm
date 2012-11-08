@@ -30,6 +30,14 @@ void AKUAppOpenFromURL ( NSURL* url ) {
 }
 
 //-----------------------------------------------------------------//
+void AKUAppDidBecomeActive()
+{
+#ifndef DISABLE_SINAWEIBO
+	[ MOAISinaWeiboIOS::Get().mSinaWeibo applicationDidBecomeActive ];
+#endif
+}
+
+//-----------------------------------------------------------------//
 void AKUAppWillEndSession () {
 
 	MOAIAppIOS::Get ().WillEndSession ();

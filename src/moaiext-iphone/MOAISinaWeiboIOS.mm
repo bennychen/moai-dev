@@ -47,7 +47,7 @@
 	MOAISinaWeiboIOS::Get().StoreAuthData();
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
-	if ( MOAISinaWeiboIOS::Get().PushListener ( MOAISinaWeiboIOS::DIALOG_LOG_IN_CANCEL, state ))
+	if ( MOAISinaWeiboIOS::Get().PushListener ( MOAISinaWeiboIOS::SESSION_DID_LOGIN, state ))
 	{
 		state.DebugCall ( 0, 0 );
 	}
