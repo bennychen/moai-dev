@@ -14,11 +14,14 @@
 
 #import "SinaWeiboRequest.h"
 
+@protocol SinaWeiboCompileViewDelegate;
+
 @interface MOAISinaWeiboCompileView : UIView<SinaWeiboRequestDelegate>
 {
     UIButton *closeButton;
     UIButton *postButton;
     UITextView *textView;
+	UILabel	*hint;
 	UIImageView *imageView;
     UIView *modalBackgroundView;
     UIActivityIndicatorView *indicatorView;
@@ -28,14 +31,27 @@
 	UIImage *image;
 	
 	SinaWeibo *sinaWeibo;
+	
+    id<SinaWeiboCompileViewDelegate> compileDelegate;
+	id<SinaWeiboRequestDelegate> requestDelegate;
 }
 
 - (id)initWithPost:(SinaWeibo *)_sinaWeibo
 				text:(NSString *)_postText
-				image:(UIImage *)_image;
+				image:(UIImage *)_image
+				compileDelegate:(id<SinaWeiboCompileViewDelegate>)_compileDelegate
+				requestDelegate:(id<SinaWeiboRequestDelegate>)_requestDelegate;
 
 - (void)show;
 - (void)hide;
+
+@end
+
+
+@protocol SinaWeiboCompileViewDelegate <NSObject>
+
+- (void)onCancelClicked;
+- (void)onPostClicked;
 
 @end
 

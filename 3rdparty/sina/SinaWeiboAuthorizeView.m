@@ -150,7 +150,7 @@ static CGFloat kBorderWidth = 10;
         [closeButton addTarget:self action:@selector(cancel)
               forControlEvents:UIControlEventTouchUpInside];
         closeButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
-        closeButton.showsTouchWhenHighlighted = YES;
+        //closeButton.showsTouchWhenHighlighted = YES;
         closeButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
         [self addSubview:closeButton];
         

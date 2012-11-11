@@ -35,11 +35,20 @@
 
 #import "SinaWeibo.h"
 #import "SinaWeiboRequest.h"
+#import "MOAISinaWeiboCompileView.h"
 
 //================================================================//
 // MOAISinaWeiboIOSDelegate
 //================================================================//
 @interface MOAISinaWeiboIOSDelegate : NSObject < SinaWeiboDelegate > {
+@private
+}
+@end
+
+//================================================================//
+// MOAISinaWeiboCompileViewDelegate
+//================================================================//
+@interface MOAISinaWeiboCompileViewDelegate : NSObject < SinaWeiboCompileViewDelegate > {
 @private
 }
 @end
@@ -83,6 +92,8 @@ public:
 		SESSION_DID_LOGIN,
 		SESSION_DID_LOGOUT,
 		DIALOG_LOG_IN_CANCEL,
+		DIALOG_POST_OK_CLICKED,
+		DIALOG_POST_CANCEL_CLICKED,
 		REQUEST_RESPONSE_WITH_RESULT,
 		REQUEST_RESPONSE_WITH_ERROR,
 	};
@@ -90,6 +101,7 @@ public:
 	SinaWeibo *mSinaWeibo;
 	MOAISinaWeiboIOSDelegate*			mWeiboDelegate;	
 	MOAISinaWeiboRequestIOSDelegate*	mWeiboRequestDelegate;
+	MOAISinaWeiboCompileViewDelegate*   mWeiboCompileDelegate;
 
 	//----------------------------------------------------------------//
 					MOAISinaWeiboIOS			();

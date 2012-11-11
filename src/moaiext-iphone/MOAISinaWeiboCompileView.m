@@ -125,11 +125,15 @@ static CGFloat kBorderWidth = 10;
 
 - (id)initWithPost:(SinaWeibo *)_sinaWeibo
 				text:(NSString *)_postText
-				image:(UIImage *)_image;
+				image:(UIImage *)_image
+				compileDelegate:(id<SinaWeiboCompileViewDelegate>)_compileDelegate
+				requestDelegate:(id<SinaWeiboRequestDelegate>)_requestDelegate
 {
 	sinaWeibo = _sinaWeibo;
 	postText = _postText;
 	image = _image;
+	compileDelegate = _compileDelegate;
+	requestDelegate = _requestDelegate;
     self = [self init];
     return self;
 }
@@ -149,25 +153,34 @@ static CGFloat kBorderWidth = 10;
         [closeButton addTarget:self action:@selector(cancel)
               forControlEvents:UIControlEventTouchUpInside];
         closeButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
-        closeButton.showsTouchWhenHighlighted = YES;
+        //closeButton.showsTouchWhenHighlighted = YES;
         [self addSubview:closeButton];
         
         postButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [postButton setTitle:@"发布" forState:UIControlStateNormal];
-        postButton.frame = CGRectMake(250, 10, 100, 30);
+        postButton.frame = CGRectMake(500, 10, 100, 30);
         [postButton addTarget:self action:@selector(post)
               forControlEvents:UIControlEventTouchUpInside];
         postButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
-        postButton.showsTouchWhenHighlighted = YES;
+        //postButton.showsTouchWhenHighlighted = YES;
+		postButton.enabled = postText.length > 0;
         [self addSubview:postButton];
         
         textView = [[UITextView alloc] init];
         textView.text = postText;
-        textView.frame = CGRectMake( 20, 100, 300, 200 );
+        textView.frame = CGRectMake( 20, 100, 575, 200 );
+		[textView setFont:[UIFont boldSystemFontOfSize:16]];
         [self addSubview:textView];
 		
+		hint = [ [UILabel alloc ] initWithFrame:CGRectMake(20, 40, 150.0, 43.0) ];
+		hint.textAlignment =  UITextAlignmentCenter;
+		hint.textColor = [UIColor whiteColor];
+		hint.backgroundColor = [UIColor clearColor];
+		hint.font = [UIFont boldSystemFontOfSize:16];
+		[self addSubview:hint];
+		
         imageView = [[UIImageView alloc] initWithImage:image];
-        imageView.frame = CGRectMake( 100, 300, 100, 75 );
+        imageView.frame = CGRectMake( 50, 350, 100, 75 );
         [self addSubview:imageView];
         
         indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:
@@ -185,7 +198,7 @@ static CGFloat kBorderWidth = 10;
 
 - (void)dealloc
 {
-    [postText release], postText = nil;
+	[postText release], postText = nil;
     [modalBackgroundView release], modalBackgroundView = nil;
     
     [super dealloc];
@@ -317,12 +330,37 @@ BOOL IsDeviceIPad()
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(deviceOrientationDidChange:)
 												 name:@"UIDeviceOrientationDidChangeNotification" object:nil];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(textChanged:)
+												 name:UITextViewTextDidChangeNotification
+											   object:textView];
 }
 
 - (void)removeObservers
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self
 													name:@"UIDeviceOrientationDidChangeNotification" object:nil];
+}
+
+
+- (void)textChanged:(NSNotification *)notification{
+	NSUInteger maxLength = 140;
+	postButton.enabled = textView.text.length > 0;
+	if (textView.text.length > maxLength)
+    {
+		hint.text = [NSString stringWithFormat: @"已经超过%d字", textView.text.length - maxLength];
+		postButton.enabled = false;
+    }
+	else
+	{
+		hint.text = [NSString stringWithFormat:@"还可以输入%d字", maxLength - textView.text.length];
+		postButton.enabled = true;
+	}
+	if (textView.text.length == 0 )
+	{
+		postButton.enabled = false;
+	}
 }
 
 #pragma mark - Activity Indicator
@@ -383,11 +421,22 @@ BOOL IsDeviceIPad()
 
 - (void)post
 {
+	NSUInteger maxLength = 140;
+	NSString *text;
+	if (textView.text.length > maxLength)
+    {
+        text = [textView.text substringToIndex:maxLength];
+    }
+	else
+	{
+		text = textView.text;
+	}
+
 	if (image != NULL )
 	{
 		[sinaWeibo requestWithURL:@"statuses/upload.json"
 				   params:[NSMutableDictionary dictionaryWithObjectsAndKeys:
-						   postText, @"status",
+						   text, @"status",
 						   image, @"pic", nil]
 			   httpMethod:@"POST"
 				 delegate:self];
@@ -395,17 +444,24 @@ BOOL IsDeviceIPad()
 	else
 	{
 		[sinaWeibo requestWithURL:@"statuses/update.json"
-				   params:[NSMutableDictionary dictionaryWithObjectsAndKeys:postText, @"status", nil]
+				   params:[NSMutableDictionary dictionaryWithObjectsAndKeys:text, @"status", nil]
 			   httpMethod:@"POST"
 				 delegate:self];
 	}
 	
     [self showIndicator];
+	closeButton.enabled = false;
+	postButton.enabled = false;
+	textView.editable = false;
+	
+    [compileDelegate onPostClicked];
 }
 
 - (void)cancel
 {
     [self hide];
+	
+    [compileDelegate onCancelClicked];
 }
 
 
@@ -418,6 +474,15 @@ BOOL IsDeviceIPad()
 													   delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
 	[alertView show];
 	[alertView release];
+	closeButton.enabled = true;
+	postButton.enabled = true;
+	textView.editable = true;
+	[self hideIndicator];
+	
+	if ([requestDelegate respondsToSelector:@selector(request:didFailWithError:)])
+	{
+		[requestDelegate request:request didFailWithError:error];
+	}
 }
 
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
@@ -428,6 +493,11 @@ BOOL IsDeviceIPad()
 	[alertView show];
 	[alertView release];
 	[self hide];
+	
+	if ([requestDelegate respondsToSelector:@selector(request:didFinishLoadingWithResult:)])
+	{
+		[requestDelegate request:request didFinishLoadingWithResult:result];
+	}
 }
 
 @end

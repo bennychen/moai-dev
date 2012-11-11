@@ -91,6 +91,40 @@
 
 @end
 
+
+//================================================================//
+// MOAISinaWeiboCompileViewDelegate
+//================================================================//
+@implementation MOAISinaWeiboCompileViewDelegate
+
+//================================================================//
+#pragma mark -
+#pragma mark Protocol MOAISinaWeiboCompileViewDelegate
+
+- (void)onCancelClicked
+{
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	
+	if ( MOAISinaWeiboIOS::Get().PushListener ( MOAISinaWeiboIOS::DIALOG_POST_CANCEL_CLICKED, state ))
+	{
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+- (void)onPostClicked
+{
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	
+	if ( MOAISinaWeiboIOS::Get().PushListener ( MOAISinaWeiboIOS::DIALOG_POST_OK_CLICKED, state ))
+	{
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+//================================================================//
+
+@end
+
 //================================================================//
 // MOAISinaWeiboRequestIOSDelegate
 //================================================================//
@@ -103,38 +137,52 @@
 
 - (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
 {
-    if ([request.url hasSuffix:@"users/show.json"])
-    {
-       
-    }
-    else if ([request.url hasSuffix:@"statuses/user_timeline.json"])
-    {
-        
-    }
-    else if ([request.url hasSuffix:@"statuses/update.json"])
-    {
-        NSLog(@"Post status failed with error : %@", error);
-    }
-    else if ([request.url hasSuffix:@"statuses/upload.json"])
-    {
-        NSLog(@"Post image status failed with error : %@", error);
-    }
+//    if ([request.url hasSuffix:@"users/show.json"])
+//    {
+//       
+//    }
+//    else if ([request.url hasSuffix:@"statuses/user_timeline.json"])
+//    {
+//        
+//    }
+//    else if ([request.url hasSuffix:@"statuses/update.json"])
+//    {
+//        NSLog(@"Post status failed with error : %@", error);
+//    }
+//    else if ([request.url hasSuffix:@"statuses/upload.json"])
+//    {
+//        NSLog(@"Post image status failed with error : %@", error);
+//    }
+	
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	
+	if ( MOAISinaWeiboIOS::Get().PushListener ( MOAISinaWeiboIOS::REQUEST_RESPONSE_WITH_ERROR, state ))
+	{
+		state.DebugCall ( 0, 0 );
+	}
 }
 
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
 {
-    if ([request.url hasSuffix:@"users/show.json"])
-    {
-    }
-    else if ([request.url hasSuffix:@"statuses/user_timeline.json"])
-    {
-    }
-    else if ([request.url hasSuffix:@"statuses/update.json"])
-    {
-    }
-    else if ([request.url hasSuffix:@"statuses/upload.json"])
-    {
-    }
+//    if ([request.url hasSuffix:@"users/show.json"])
+//    {
+//    }
+//    else if ([request.url hasSuffix:@"statuses/user_timeline.json"])
+//    {
+//    }
+//    else if ([request.url hasSuffix:@"statuses/update.json"])
+//    {
+//    }
+//    else if ([request.url hasSuffix:@"statuses/upload.json"])
+//    {
+//    }
+	
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	
+	if ( MOAISinaWeiboIOS::Get().PushListener ( MOAISinaWeiboIOS::REQUEST_RESPONSE_WITH_RESULT, state ))
+	{
+		state.DebugCall ( 0, 0 );
+	}
 }
 
 @end
@@ -291,7 +339,9 @@ int MOAISinaWeiboIOS::_compileDialog(lua_State* L)
 	MOAISinaWeiboCompileView *compileView = [[MOAISinaWeiboCompileView alloc]initWithPost:
 																			MOAISinaWeiboIOS::Get().mSinaWeibo
 																			text:textStr
-																			image:img];
+																			image:img
+																			compileDelegate:MOAISinaWeiboIOS::Get().mWeiboCompileDelegate
+																			requestDelegate:MOAISinaWeiboIOS::Get().mWeiboRequestDelegate];
 		
 		
 	[compileView show];
@@ -312,12 +362,14 @@ MOAISinaWeiboIOS::MOAISinaWeiboIOS () {
 	
 	mWeiboDelegate = [[ MOAISinaWeiboIOSDelegate alloc ] init];
 	mWeiboRequestDelegate = [[ MOAISinaWeiboRequestIOSDelegate alloc ] init ];
+	mWeiboCompileDelegate = [[ MOAISinaWeiboCompileViewDelegate alloc ] init ];
 }
 
 //----------------------------------------------------------------//
 MOAISinaWeiboIOS::~MOAISinaWeiboIOS () {
 	[mWeiboDelegate release];
 	[mWeiboRequestDelegate release];
+	[mWeiboCompileDelegate release];
 	[mSinaWeibo release];
 }
 
@@ -348,6 +400,8 @@ void MOAISinaWeiboIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "SESSION_DID_LOGIN",				( u32 )SESSION_DID_LOGIN );
 	state.SetField ( -1, "SESSION_DID_NOT_LOGIN",			( u32 )SESSION_DID_LOGOUT );
 	state.SetField ( -1, "DIALOG_LOG_IN_CANCEL",			( u32 )DIALOG_LOG_IN_CANCEL );
+	state.SetField ( -1, "DIALOG_POST_OK_CLICKED",			( u32 )DIALOG_POST_OK_CLICKED );
+	state.SetField ( -1, "DIALOG_POST_CANCEL_CLICKED",		( u32 )DIALOG_POST_CANCEL_CLICKED );
 	state.SetField ( -1, "REQUEST_RESPONSE_WITH_RESULT", 	( u32 )REQUEST_RESPONSE_WITH_RESULT );
 	state.SetField ( -1, "REQUEST_RESPONSE_WITH_ERROR", 	( u32 )REQUEST_RESPONSE_WITH_ERROR );
 
