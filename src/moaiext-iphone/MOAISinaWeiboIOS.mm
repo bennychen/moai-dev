@@ -360,6 +360,7 @@ MOAISinaWeiboIOS::MOAISinaWeiboIOS () {
 	RTTI_SINGLE ( MOAILuaObject )
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
+	mSinaWeibo = NULL;
 	mWeiboDelegate = [[ MOAISinaWeiboIOSDelegate alloc ] init];
 	mWeiboRequestDelegate = [[ MOAISinaWeiboRequestIOSDelegate alloc ] init ];
 	mWeiboCompileDelegate = [[ MOAISinaWeiboCompileViewDelegate alloc ] init ];
