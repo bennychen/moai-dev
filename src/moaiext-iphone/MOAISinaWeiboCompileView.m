@@ -148,17 +148,25 @@ static CGFloat kBorderWidth = 10;
         self.contentMode = UIViewContentModeRedraw;
         
         closeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [closeButton setTitle:@"取消" forState:UIControlStateNormal];
+        [closeButton setTitle:@"关闭" forState:UIControlStateNormal];
         closeButton.frame = CGRectMake(10, 10, 100, 30);
         [closeButton addTarget:self action:@selector(cancel)
               forControlEvents:UIControlEventTouchUpInside];
         closeButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
         //closeButton.showsTouchWhenHighlighted = YES;
         [self addSubview:closeButton];
+		
+        logButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [logButton setTitle:@"注销并关闭" forState:UIControlStateNormal];
+        logButton.frame = CGRectMake(500, 10, 100, 30);
+        [logButton addTarget:self action:@selector(logOut)
+			 forControlEvents:UIControlEventTouchUpInside];
+        logButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+        [self addSubview:logButton];
         
         postButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [postButton setTitle:@"发布" forState:UIControlStateNormal];
-        postButton.frame = CGRectMake(500, 10, 100, 30);
+        postButton.frame = CGRectMake(500, 320, 100, 30);
         [postButton addTarget:self action:@selector(post)
               forControlEvents:UIControlEventTouchUpInside];
         postButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
@@ -168,7 +176,7 @@ static CGFloat kBorderWidth = 10;
         
         textView = [[UITextView alloc] init];
         textView.text = postText;
-        textView.frame = CGRectMake( 20, 100, 575, 200 );
+        textView.frame = CGRectMake( 20, 90, 575, 200 );
 		[textView setFont:[UIFont boldSystemFontOfSize:16]];
         [self addSubview:textView];
 		
@@ -457,6 +465,13 @@ BOOL IsDeviceIPad()
     [compileDelegate onPostClicked];
 }
 
+- (void)logOut
+{
+	[sinaWeibo logOut];
+	[self hide];
+    [compileDelegate onCancelClicked];
+}
+
 - (void)cancel
 {
     [self hide];
@@ -472,6 +487,7 @@ BOOL IsDeviceIPad()
 	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"失败"
 														message:@"发送失败，请稍后再试"
 													   delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+	
 	[alertView show];
 	[alertView release];
 	closeButton.enabled = true;

@@ -154,6 +154,8 @@
 //        NSLog(@"Post image status failed with error : %@", error);
 //    }
 	
+	NSLog( @"Post weibo failed with error %@", error );
+	
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
 	if ( MOAISinaWeiboIOS::Get().PushListener ( MOAISinaWeiboIOS::REQUEST_RESPONSE_WITH_ERROR, state ))

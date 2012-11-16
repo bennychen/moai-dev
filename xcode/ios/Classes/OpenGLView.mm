@@ -87,7 +87,7 @@
 		
 		glLayer.opaque = YES;
 		glLayer.drawableProperties = [ NSDictionary
-			dictionaryWithObjectsAndKeys :[ NSNumber numberWithBool:NO ],
+			dictionaryWithObjectsAndKeys :[ NSNumber numberWithBool:YES ],
 			kEAGLDrawablePropertyRetainedBacking,
 			kEAGLColorFormatRGBA8, // kEAGLColorFormatRGB565 or kEAGLColorFormatRGBA8
 			kEAGLDrawablePropertyColorFormat,

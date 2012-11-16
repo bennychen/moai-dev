@@ -20,6 +20,8 @@
 {
     UIButton *closeButton;
     UIButton *postButton;
+	UIButton *logButton;
+	UILabel *logInfo;
     UITextView *textView;
 	UILabel	*hint;
 	UIImageView *imageView;

@@ -37,18 +37,16 @@ static void freeImageData(void *, const void *data, size_t)
 }
 
 -(UIImage *)getImageFromFrameBuffer {
-	
-	
-    UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
-	
-    UIViewController* controller = [ window rootViewController ]; 
-    CGRect frame=controller.view.frame;
-	
-    size_t backingWidth= (size_t) frame.size.height;
-    size_t backingHeight= (size_t) frame.size.width;
+    CGRect screenRect = [[ UIScreen mainScreen ] bounds ];
+    CGFloat scale = [[ UIScreen mainScreen ] scale ];
+	// TODO: later pass in parameter isLandscape, now is default to landscape
+	CGFloat screenWidth = screenRect.size.height * scale;
+	CGFloat screenHeight = screenRect.size.width * scale;
+    size_t backingWidth= (size_t) screenWidth;
+    size_t backingHeight= (size_t) screenHeight;
     GLubyte *buffer = (GLubyte *) malloc(backingWidth * backingHeight * 4);
 	
-	//NSLog(@"backing resolution (%f, %f)", frame.size.width, frame.size.height);
+	//NSLog(@"backing resolution (%f, %f)", screenWidth, screenHeight);
 	
     glReadPixels(0, 0, backingWidth, backingHeight, GL_RGBA, GL_UNSIGNED_BYTE, (GLvoid *)buffer);
 	
@@ -67,8 +65,8 @@ static void freeImageData(void *, const void *data, size_t)
     // Make UIImage from CGImage
     UIImage *newUIImage = [[[UIImage alloc] initWithCGImage: imageRef] autorelease];
 	
-	
     UIImage *answerImage= [newUIImage rotate:_orientation];
+	answerImage = [answerImage scaleWithMaxSize:1024];
     //NSLog(@"Snapshot image is extent (%f, %f)", answerImage.size.width, answerImage.size.height);
 	
     // If we have a bounds rectangle then crop to this
@@ -213,14 +211,16 @@ MOAIScreenShotIOS::~MOAIScreenShotIOS () {
 void MOAIScreenShotIOS::RegisterLuaClass ( MOAILuaState& state ) {
   
     // This is the list of constants that can be accessed from Lua.
-    // These correspond to the rotation modes that one has to use for the various device orientations.
-    // Note that we use the "mirrored" options to compensate for the fact that the OpenGL frame buffer
-    // is inverted.
-
-	state.SetField ( -1, "PORTRAIT",			(u32)	UIImageOrientationDownMirrored);
-	state.SetField ( -1, "PORTRAIT_UPSIDEDOWN",	(u32)	UIImageOrientationUpMirrored );
-	state.SetField ( -1, "LANDSCAPE_LEFT",		(u32)	UIImageOrientationLeftMirrored );
-	state.SetField ( -1, "LANDSCAPE_RIGHT",		(u32)	UIImageOrientationRightMirrored );
+    // Remeber UI image orientation is reversed with OpenGL
+	state.SetField ( -1, "IMAGE_ORIENTATION_UP",		(u32)UIImageOrientationDownMirrored);
+	state.SetField ( -1, "IMAGE_ORIENTATION_DOWN",		(u32)UIImageOrientationUpMirrored );
+	state.SetField ( -1, "IMAGE_ORIENTATION_LEFT",		(u32)UIImageOrientationLeftMirrored );
+	state.SetField ( -1, "IMAGE_ORIENTATION_RIGHT",		(u32)UIImageOrientationRightMirrored );
+	
+	state.SetField ( -1, "IMAGE_ORIENTATION_DOWN_MIRRORED",			(u32)	UIImageOrientationUp);
+	state.SetField ( -1, "IMAGE_ORIENTATION_UP_MIRRORED",	(u32)	UIImageOrientationDown );
+	state.SetField ( -1, "IMAGE_ORIENTATION_LEFT_MIRRORED",		(u32)	UIImageOrientationLeft );
+	state.SetField ( -1, "IMAGE_ORIENTATION_RIGHT_MIRRORED",		(u32)	UIImageOrientationRight );
 
 	//This is a list of functions that can be called from Lua
     luaL_Reg regTable [] = {
