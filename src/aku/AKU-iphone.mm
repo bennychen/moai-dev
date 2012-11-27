@@ -41,6 +41,14 @@ void AKUAppDidBecomeActive()
 }
 
 //-----------------------------------------------------------------//
+void AKUAppWillEnterForeground()
+{
+#ifndef DISABLE_APPIRATER
+	MOAIAppirater::Get().ApplicationWillEnterForeground();
+#endif
+}
+
+//-----------------------------------------------------------------//
 void AKUAppWillEndSession () {
 
 	MOAIAppIOS::Get ().WillEndSession ();
@@ -133,6 +141,10 @@ void AKUIphoneInit ( UIApplication* application ) {
 	
 	#ifndef DISABLE_SCREENSHOT
 		REGISTER_LUA_CLASS ( MOAIScreenShotIOS )
+	#endif
+	
+	#ifndef DISABLE_APPIRATER
+		REGISTER_LUA_CLASS( MOAIAppirater )
 	#endif
 	
 	// Device properties

@@ -30,3 +30,4 @@
 
 #import <moaiext-iphone/MOAIScreenShotIOS.h>
 #import <moaiext-iphone/MOAISinaWeiboIOS.h>
+#import <moaiext-iphone/MOAIAppirater.h>
