@@ -147,17 +147,8 @@ static CGFloat kBorderWidth = 10;
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         self.contentMode = UIViewContentModeRedraw;
         
-        closeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [closeButton setTitle:@"关闭" forState:UIControlStateNormal];
-        closeButton.frame = CGRectMake(10, 10, 100, 30);
-        [closeButton addTarget:self action:@selector(cancel)
-              forControlEvents:UIControlEventTouchUpInside];
-        closeButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
-        //closeButton.showsTouchWhenHighlighted = YES;
-        [self addSubview:closeButton];
-		
         logButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [logButton setTitle:@"注销并关闭" forState:UIControlStateNormal];
+        [logButton setTitle:@"退出登陆" forState:UIControlStateNormal];
         logButton.frame = CGRectMake(500, 10, 100, 30);
         [logButton addTarget:self action:@selector(logOut)
 			 forControlEvents:UIControlEventTouchUpInside];
@@ -166,7 +157,7 @@ static CGFloat kBorderWidth = 10;
         
         postButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [postButton setTitle:@"发布" forState:UIControlStateNormal];
-        postButton.frame = CGRectMake(500, 320, 100, 30);
+        postButton.frame = CGRectMake(300, 360, 100, 30);
         [postButton addTarget:self action:@selector(post)
               forControlEvents:UIControlEventTouchUpInside];
         postButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
@@ -174,6 +165,15 @@ static CGFloat kBorderWidth = 10;
 		postButton.enabled = postText.length > 0;
         [self addSubview:postButton];
         
+        closeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [closeButton setTitle:@"取消" forState:UIControlStateNormal];
+        closeButton.frame = CGRectMake(500, 360, 100, 30);
+        [closeButton addTarget:self action:@selector(cancel)
+              forControlEvents:UIControlEventTouchUpInside];
+        closeButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+        //closeButton.showsTouchWhenHighlighted = YES;
+        [self addSubview:closeButton];
+		
         textView = [[UITextView alloc] init];
         textView.text = postText;
         textView.frame = CGRectMake( 20, 90, 575, 200 );
